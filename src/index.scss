@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=ABeeZee&family=Arsenal:wght@400;700&family=Marcellus&family=Mooli&family=Poppins:wght@100;300;400;500;600;700;800;900&family=Work+Sans:wght@300;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+body {
+    font-family: "ABeeZee", sans-serif;
+    font-family: "Arsenal", sans-serif;
+    font-family: "Marcellus", serif;
+    font-family: "Mooli", sans-serif;
+    font-family: "Poppins", sans-serif;
+    font-family: "Work Sans", sans-serif;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+html {
+    font-size: 62.5%;
+}
