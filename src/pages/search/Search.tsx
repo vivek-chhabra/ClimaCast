@@ -1,3 +1,6 @@
+import { fetchWeatherInfo } from "../../app/slice/weatherSlice";
+import { useAppDispatch } from "../../app/hooks";
+import { useNavigate } from "react-router-dom";
 import { LocList } from "../../types/types";
 import React, { useState } from "react";
 import axios from "axios";
@@ -14,6 +17,9 @@ export default function Search({}: Props): JSX.Element {
     const [error, setError] = useState("");
     const [weatherInfo, setWeatherInfo] = useState<{}>({});
 
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
     const handleClick = async (option: LocList) => {
         setQuery(`${option.name}, ${option.state}`);
         setSelectedOption(option);
@@ -29,12 +35,12 @@ export default function Search({}: Props): JSX.Element {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if ("lat" in selectedOption) {
-            const res = await axios(`https://api.openweathermap.org/data/2.5/weather?lat=${selectedOption.lat}&lon=${selectedOption.lon}&appid=${import.meta.env.VITE_API_KEY}`);
-            console.log(res.data);
+            dispatch(fetchWeatherInfo({name: selectedOption.name}))
             setSelectedOption({});
             setError("");
+            navigate('/weatherdetails')
         } else {
-            setError("select the option below");
+            setError("please select from the suggested options");
         }
     };
 

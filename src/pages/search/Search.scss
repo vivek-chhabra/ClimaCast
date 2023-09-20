@@ -10,6 +10,13 @@
     font-size: 1.6rem;
     background-color: rgba(255, 255, 255, 0.34);
 
+    @include sm {
+        min-height: 120%;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0rem;
+    }
+
     h1 {
         font-weight: 700;
         font-family: "Poppins", sans-serif;
@@ -38,7 +45,6 @@
         background-color: $slate;
         color: white;
         font-weight: 500;
-
     }
 
     .input {

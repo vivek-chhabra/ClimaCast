@@ -5,44 +5,48 @@ import axios from "axios";
 interface InitialType {
     loading: boolean;
     error: string;
-    data: WeatherInfo | {};
+    data: WeatherInfo | null;
     success: boolean;
 }
 
 const initialState: InitialType = {
     loading: false,
     error: "",
-    data: {},
+    data: null,
     success: false,
 };
 
-const fetchWeatherInfo = createAsyncThunk("weatherInfo/fetchWeatherInfo", async ({ lat, lon }: Omit<LocList, "name" | "state">) => {
-    let res = await axios(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${import.meta.env.VITE_API_KEY}`);
-    return res.data;
+export const fetchWeatherInfo = createAsyncThunk("weatherInfo/fetchWeatherInfo", async ({ name }: Omit<LocList, "state">) => {
+    let res = await axios(`https://api.openweathermap.org/data/2.5/forecast?units=metric&q=${name}&appid=${import.meta.env.VITE_API_KEY}`);
+    const forcastData: WeatherInfo = {
+        ...res.data.city,
+        list: res.data.list.slice(0, 16),
+    };
+    return forcastData;
 });
 
 const weatherSlice = createSlice({
-    name: 'weather',
+    name: "weather",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchWeatherInfo.pending, (state) => {
-            state.error = ''
-            state.loading = true
-            state.success = false
-        })
+            state.error = "";
+            state.loading = true;
+            state.success = false;
+        });
         builder.addCase(fetchWeatherInfo.fulfilled, (state, action) => {
-            state.loading = false
-            state.success = true
-            state.data  = action.payload
-        })
+            state.loading = false;
+            state.success = true;
+            state.data = action.payload;
+        });
         builder.addCase(fetchWeatherInfo.rejected, (state, action) => {
-            state.error = action.error.message || 'Something went wrong'
-            state.loading = false
-            state.success = false
-            state.data = {}
-        })
-    }
-})
+            state.error = action.error.message || "Something went wrong";
+            state.loading = false;
+            state.success = false;
+            state.data = {};
+        });
+    },
+});
 
 export const weatherReducer = weatherSlice.reducer;
