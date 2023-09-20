@@ -44,7 +44,7 @@ const weatherSlice = createSlice({
             state.error = action.error.message || "Something went wrong";
             state.loading = false;
             state.success = false;
-            state.data = {};
+            state.data = null;
         });
     },
 });

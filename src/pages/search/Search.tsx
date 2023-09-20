@@ -15,7 +15,6 @@ export default function Search({}: Props): JSX.Element {
     const [options, setOptions] = useState<[]>([]);
     const [selectedOption, setSelectedOption] = useState<LocList | {}>({});
     const [error, setError] = useState("");
-    const [weatherInfo, setWeatherInfo] = useState<{}>({});
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
